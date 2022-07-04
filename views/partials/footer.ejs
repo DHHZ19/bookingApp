@@ -10,6 +10,26 @@
 
     <!--scripts-->
     <script src="js/main.js"></script>
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+   <script>
+    flatpickr("#myID", 
+    {
+    "enableTime": true,
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minTime: "16:00",
+    maxTime: "22:00",
+    enable: [
+        function(date) {
+            // return true to enable
+
+            return (date.getMonth() % 2 === 0 && date.getDate() < 15);
+
+        }
+    ]
+    }
+    );
+   </script>
  </body>
 </html>

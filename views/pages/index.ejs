@@ -2,9 +2,9 @@
 <%- include('../partials/head') %>
 <%- include('../partials/header') %>
 <main>
-<div id="tabed"class="tabs is-centered">
+<div id="tabed"class="tabs is-centered is-large">
     <ul>
-        <li data-target="appointment">
+        <li class="is-active" data-target="appointment">
             <a>Choose Appointment</a>
         </li>
         <li data-target="info">
@@ -16,23 +16,23 @@
     </ul>
   </div>
   <div class="px-2" id="tab-content">
-    <div id="appointment" class="has-background-warning">
-        <h3 class="is-size-5- title  is-align-items-center  is-justify-content-center is-align-self-center ">Select Service</h3>
+    <div id="appointment">
+        <h3 class="is-size-5- title  has-text-centered">Select Service</h3>
         <div class="calendar has-background-info hero is-medium is-align-items-center">
-            <div class="hero-body is-justify-content-center">
+            <div class="√">
                 <form>
-                    <div>
-                      <label class="tag is-size-5"for="party">Choose your preferred party date and time (required, June 1st 8.30am to June 30th 4.30pm):</label>
-                      <input id="party" type="datetime-local" name="partydate"
-                             min="2017-06-01T08:30" max="2017-06-30T16:30"
-                             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" 
-                             class="input has-background-light is-medium"
-                             required>
+                    <div class="is-align-items-center section">
+                        <div class="field">
+                            <label class="label is-size-4 has-text-centered">Choose Time</label>
+                            <!-- <input id="party" type="datetime-local" name="partydate"
+                               min="2017-06-01T08:30" max="2017-06-30T16:30"
+                               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" 
+                               class="input has-background-light is-medium is-focused" 
+                               required> -->
+                               <input id="myID" type="datetime-local" class="is-medium input">
+                            <input type="submit" value="Book appointment☀️!"class="button is-grey-light">
+                        </div>
                     </div>
-                    <div>
-                      <input type="submit" value="Book party!"class="button is-grey-light">
-                    </div>
-                    <input type="hidden" id="timezone" name="timezone" value="-08:00">
                   </form>
                   
               </div>
