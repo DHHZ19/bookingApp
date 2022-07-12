@@ -15,7 +15,120 @@
     <div class="navbar-menu navbar-end" id="nav-links">
       <!-- right links -->
      
-        <a class="navbar-item">Log in</a>
+      <button class="js-modal-trigger has-background-white" data-target="modal-js-example">
+        Open JS example modal
+      </button>
         <a class="navbar-item">Booking With Me</a>
     </div>
   </nav>
+  <!-- Modal for login-->
+  <form >
+  <div id="modal-js-example" class="modal">
+    <div class="modal-background"></div>
+  
+    <div class="modal-content">
+      <div class="box">
+        <div class="error" style="background-color: red;"></div><br>
+        <h2 class="is-justify-center">login</h2>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" id="username" placeholder="username" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="password" id ="password" placeholder="Password" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control">
+            <button >
+             <input class="button is-success" type="submit" value="login"> 
+            </button>
+          </p>
+        </div>
+        <a href="/register">Don't have an accout? Register</a>
+      </div>
+    </div>
+  </form>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add('is-active');
+  }
+
+  function closeModal($el) {
+    $el.classList.remove('is-active');
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on buttons to open a specific modal
+  (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+    const modal = $trigger.dataset.target;
+    const $target = document.getElementById(modal);
+
+    $trigger.addEventListener('click', () => {
+      openModal($target);
+    });
+  });
+
+  // Add a click event on various child elements to close the parent modal
+  (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => {
+      closeModal($target);
+    });
+  });
+
+  // Add a keyboard event to close all modals
+  document.addEventListener('keydown', (event) => {
+    const e = event || window.event;
+
+    if (e.keyCode === 27) { // Escape key
+      closeAllModals();
+    }
+  });
+});
+// this is for the submit
+const form = document.querySelector('form')
+    const username = document.querySelector('#username')
+    const password = document.querySelector('#password')
+    const display = document.querySelector('.error')
+   form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      display.textContent = ''
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ username: username.value, password: password.value }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        const data = await res.json()
+        if (res.status === 400 || res.status === 401) {
+          return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
+        }
+        data.role === "admin" ? location.assign('/admin') : location.assign('/basic')
+      } catch (err) {
+        console.log(err.message)
+      }
+    })
+
+  </script>
