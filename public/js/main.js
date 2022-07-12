@@ -19,10 +19,9 @@ tabs.forEach((e) =>{
    e.addEventListener('click', () => {
      tabs.forEach( item => {
         item.classList.remove('is-active')
-        e .classList.add('is-active')
+        e.classList.add('is-active')
 
         const target = e.dataset.target;
-        console.log(target)
         tabContentBoxes.forEach((x,i) =>{
             if(x.getAttribute('id') == target){
                 x.classList.remove('is-hidden')
