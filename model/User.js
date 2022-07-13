@@ -10,7 +10,9 @@ const userSchema = new mongoose.Schema ({
         type: String,
         minlength: 6,
         required: true,
-
+    },
+    passcode:{
+        type: String,
     },
     role: {
         type: String,

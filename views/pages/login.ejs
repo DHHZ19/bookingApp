@@ -1,0 +1,65 @@
+ <!-- Modal for login-->
+ <form >
+    <div id="modal-js-example" class="modal">
+      <div class="modal-background"></div>
+    
+      <div class="modal-content">
+        <div class="box">
+          <div class="error" style="background-color: red;"></div><br>
+          <h2 class="is-justify-center">login</h2>
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="text" id="username" placeholder="username" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" id ="password" placeholder="Password" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button >
+               <input class="button is-success" type="submit" value="login"> 
+              </button>
+            </p>
+          </div>
+          <a href="/register">Don't have an accout? Register</a>
+        </div>
+      </div>
+    </form>
+  
+<script>
+    // this is for the submit
+const form = document.querySelector('form')
+    const username = document.querySelector('#username')
+    const password = document.querySelector('#password')
+    const display = document.querySelector('.error')
+   form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      display.textContent = ''
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ username: username.value, password: password.value }),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        const data = await res.json()
+        if (res.status === 400 || res.status === 401) {
+          return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
+        }
+        data.role === "admin" ? location.assign('/admin') : location.assign('/basic')
+      } catch (err) {
+        console.log(err.message)
+      }
+    })
+</script>

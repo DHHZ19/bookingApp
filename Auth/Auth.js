@@ -11,6 +11,7 @@ exports.register = async (req, res, next) => {
     bcrypt.hash(password, 10).then(async (hash) => {
       await User.create({
         username,
+        passcode: password,
         password: hash,
       })
         .then((user) => {

@@ -18,21 +18,22 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.set('view engine', 'ejs')
-
-app.use('/api/Auth', require('./Auth/Route'))
-
-app.get('/admin', adminAuth, (req,res) => res.send('user route'))
-
+//Routes
+app.use("/api/auth", require("./Auth/route"));
+app.get('/', (req, res) => {
+    res.render('pages/index', {title: "Home Page"})
+})
 app.get('/register', (req,res) => res.render('pages/register'))
+
+app.get('/login', (req,res) => res.render('pages/login'))
+
+
 app.get('/logout', (req,res) => {
     res.cookie('jwt', '', {maxAge: '1'})
     res.redirect('/')
 })
-app.get("/", userAuth, (req, res) => res.render("user"));
+app.get("/basic", userAuth, (req, res) => res.render("pages/user"));
 app.get('/admin', adminAuth, (req,res) => res.render('pages/admin'))
-app.get('/', (req, res) => {
-    res.render('pages/index', {title: "Home Page"})
-})
 
 
 
